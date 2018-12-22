@@ -16,10 +16,19 @@ void Database::PackageDir( QString dir)
 }
 void Database::Save(const QString & dstDir)
 {
+	QFile file(dstDir + "/" + "Database");
+	assert(file.open(QIODevice::WriteOnly));
+
 	int total = Bigfiles.size();
 	for (int i = 0; i < total; ++i) {
+		QString str = Bigfiles.at(i)->BigfileName;
+		file.write(str.toStdString().c_str());
+		if (i < total - 1) {
+			file.write("\n");
+		}
 		Bigfiles.at(i)->Save(BaseUrl, dstDir);
 	}
+	file.close();
 }
 #include <qdir.h>
 #include "BigFile.h"

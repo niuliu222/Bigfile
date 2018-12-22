@@ -8,16 +8,18 @@ BigfileHandle::BigfileHandle(QObject *parent)
 BigfileHandle::~BigfileHandle()
 {
 }
+
+const char * HANDLE_SPLITTER = "*";
 #include <qfileinfo.h>
 void BigfileHandle::SaveHandle(QFile & file)
 {
 	file.write(this->FileName.toStdString().c_str());
-	file.write(" ");
-	file.write(this->BFName.toStdString().c_str());
-	file.write(" ");
+	file.write(HANDLE_SPLITTER);
+	//file.write(this->BFName.toStdString().c_str());
+	//file.write(" ");
 	
 	file.write(QString::number(StartPos).toStdString().c_str());
-	file.write(" ");
+	file.write(HANDLE_SPLITTER);
 	file.write(QString::number(Lenth).toStdString().c_str());
 	file.write("\n");
 }
